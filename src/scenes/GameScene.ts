@@ -3,12 +3,14 @@ import { addComponent, addEntity, createWorld, IWorld, pipe } from 'bitecs';
 import {
   Computer,
   Input,
+  PhysicsBody,
   Player,
   Position,
   Sprite,
   Velocity,
 } from '../components';
 import {
+  createCollisionSystem,
   createMovementSystem,
   createPlayerInputSystem,
   createSpriteSystem,
@@ -92,22 +94,40 @@ export class GameScene extends Phaser.Scene {
     addComponent(this.world, Player, player);
     addComponent(this.world, Input, player);
     Input.speed[player] = 25;
+    addComponent(this.world, PhysicsBody, player);
+    PhysicsBody.entity[player] = player;
 
-    const enemy = addEntity(this.world);
-    addComponent(this.world, Position, enemy);
-    Position.x[enemy] = 64;
-    Position.y[enemy] = 64;
+    const enemy1 = addEntity(this.world);
+    addComponent(this.world, Position, enemy1);
+    Position.x[enemy1] = 64;
+    Position.y[enemy1] = 64;
     addComponent(this.world, Velocity, player);
-    addComponent(this.world, Sprite, enemy);
-    Sprite.texture[enemy] = Textures.Red;
-    addComponent(this.world, Computer, enemy);
-    addComponent(this.world, Input, enemy);
-    Input.speed[enemy] = 25;
+    addComponent(this.world, Sprite, enemy1);
+    Sprite.texture[enemy1] = Textures.Red;
+    addComponent(this.world, Computer, enemy1);
+    addComponent(this.world, Input, enemy1);
+    Input.speed[enemy1] = 25;
+    addComponent(this.world, PhysicsBody, enemy1);
+    PhysicsBody.entity[enemy1] = enemy1;
+
+    const enemy2 = addEntity(this.world);
+    addComponent(this.world, Position, enemy2);
+    Position.x[enemy2] = 96;
+    Position.y[enemy2] = 96;
+    addComponent(this.world, Velocity, player);
+    addComponent(this.world, Sprite, enemy2);
+    Sprite.texture[enemy2] = Textures.Red;
+    addComponent(this.world, Computer, enemy2);
+    addComponent(this.world, Input, enemy2);
+    Input.speed[enemy2] = 25;
+    addComponent(this.world, PhysicsBody, enemy2);
+    PhysicsBody.entity[enemy2] = enemy2;
 
     this.pipeline = pipe(
       createMovementSystem(this),
       createPlayerInputSystem(this.cursorKeys!),
-      createSpriteSystem(this, this.sprites!, TextureKeys)
+      createSpriteSystem(this, this.sprites!, TextureKeys),
+      createCollisionSystem(this, this.sprites!)
     );
   }
 

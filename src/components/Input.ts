@@ -10,5 +10,6 @@ export enum Direction {
 
 export const Input = defineComponent({
   direction: Types.ui8,
+  previousDirection: Types.ui8,
   speed: Types.ui8,
 });

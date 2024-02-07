@@ -1,3 +1,4 @@
+export * from './Animation';
 export * from './Computer';
 export * from './Input';
 export * from './PhysicsBody';

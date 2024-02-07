@@ -1,6 +1,7 @@
 import { addComponent, addEntity, createWorld, IWorld, pipe } from 'bitecs';
 
 import {
+  Animation,
   Computer,
   Input,
   PhysicsBody,
@@ -10,6 +11,7 @@ import {
   Velocity,
 } from '../components';
 import {
+  createAnimationSystem,
   createCameraSystem,
   createCollisionSystem,
   createMovementSystem,
@@ -27,9 +29,10 @@ enum Textures {
   Blue = 0,
   Green = 1,
   Red = 2,
+  Player = 3,
 }
 
-const TextureKeys: string[] = ['blue', 'green', 'red'];
+const TextureKeys: string[] = ['blue', 'green', 'red', 'player'];
 
 export class GameScene extends Phaser.Scene {
   private cursorKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -60,6 +63,14 @@ export class GameScene extends Phaser.Scene {
     this.load.image(
       TextureKeys[Textures.Red],
       `src/assets/${TextureKeys[Textures.Red]}.png`
+    );
+    this.load.spritesheet(
+      TextureKeys[Textures.Player],
+      `src/assets/characters/${TextureKeys[Textures.Player]}.png`,
+      {
+        frameWidth: 48,
+        frameHeight: 48,
+      }
     );
     this.load.tilemapTiledJSON(
       MapKeys[Maps.Map],
@@ -94,7 +105,9 @@ export class GameScene extends Phaser.Scene {
     addComponent(this.world, Velocity, player);
 
     addComponent(this.world, Sprite, player);
-    Sprite.texture[player] = Textures.Green;
+    Sprite.texture[player] = Textures.Player;
+
+    addComponent(this.world, Animation, player);
 
     addComponent(this.world, Player, player);
 
@@ -147,7 +160,8 @@ export class GameScene extends Phaser.Scene {
       createPlayerInputSystem(this.cursorKeys!),
       createSpriteSystem(this, this.sprites!, TextureKeys),
       createCameraSystem(this, this.sprites!),
-      createCollisionSystem(this, this.sprites!)
+      createCollisionSystem(this, this.sprites!),
+      createAnimationSystem(this, this.sprites!)
     );
   }
 

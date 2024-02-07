@@ -94,11 +94,11 @@
     {
       "columns": 1,
       "firstgid": 1,
-      "image": "blue.png",
+      "image": "tiles/grass.png",
       "imageheight": 16,
       "imagewidth": 16,
       "margin": 0,
-      "name": "blue",
+      "name": "grass",
       "spacing": 0,
       "tilecount": 1,
       "tileheight": 16,

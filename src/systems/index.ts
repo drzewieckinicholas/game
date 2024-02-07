@@ -1,0 +1,1 @@
+export { createSpriteSystem } from './Sprite';

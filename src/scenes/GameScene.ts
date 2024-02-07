@@ -26,12 +26,13 @@ enum Maps {
 const MapKeys: string[] = ['map'];
 
 enum Textures {
-  Grass = 0,
-  Red = 1,
-  Player = 2,
+  Decor = 0,
+  Grass = 1,
+  Red = 2,
+  Player = 3,
 }
 
-const TextureKeys: string[] = ['grass', 'red', 'player'];
+const TextureKeys: string[] = ['decor', 'grass', 'red', 'player'];
 
 export class GameScene extends Phaser.Scene {
   private cursorKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -51,6 +52,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
+    this.load.image(
+      TextureKeys[Textures.Decor],
+      `src/assets/tiles/${TextureKeys[Textures.Decor]}.png`
+    );
     this.load.image(
       TextureKeys[Textures.Grass],
       `src/assets/tiles/${TextureKeys[Textures.Grass]}.png`
@@ -81,6 +86,13 @@ export class GameScene extends Phaser.Scene {
     });
 
     map.addTilesetImage(
+      TextureKeys[Textures.Decor],
+      TextureKeys[Textures.Decor],
+      16,
+      16
+    );
+
+    map.addTilesetImage(
       TextureKeys[Textures.Grass],
       TextureKeys[Textures.Grass],
       16,
@@ -88,6 +100,8 @@ export class GameScene extends Phaser.Scene {
     );
 
     map.createLayer(0, TextureKeys[Textures.Grass], 0, 0);
+
+    map.createLayer(1, TextureKeys[Textures.Decor], 0, 0);
 
     this.world = createWorld();
 

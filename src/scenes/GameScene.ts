@@ -10,6 +10,7 @@ import {
   Velocity,
 } from '../components';
 import {
+  createCameraSystem,
   createCollisionSystem,
   createMovementSystem,
   createPlayerInputSystem,
@@ -85,41 +86,59 @@ export class GameScene extends Phaser.Scene {
     this.world = createWorld();
 
     const player = addEntity(this.world);
+
     addComponent(this.world, Position, player);
-    Position.x[player] = 32;
-    Position.y[player] = 32;
+    Position.x[player] = 50;
+    Position.y[player] = 50;
+
     addComponent(this.world, Velocity, player);
+
     addComponent(this.world, Sprite, player);
     Sprite.texture[player] = Textures.Green;
+
     addComponent(this.world, Player, player);
+
     addComponent(this.world, Input, player);
     Input.speed[player] = 25;
+
     addComponent(this.world, PhysicsBody, player);
     PhysicsBody.entity[player] = player;
 
     const enemy1 = addEntity(this.world);
+
     addComponent(this.world, Position, enemy1);
-    Position.x[enemy1] = 64;
-    Position.y[enemy1] = 64;
+    Position.x[enemy1] = 100;
+    Position.y[enemy1] = 100;
+
     addComponent(this.world, Velocity, player);
+
     addComponent(this.world, Sprite, enemy1);
     Sprite.texture[enemy1] = Textures.Red;
+
     addComponent(this.world, Computer, enemy1);
+
     addComponent(this.world, Input, enemy1);
     Input.speed[enemy1] = 25;
+
     addComponent(this.world, PhysicsBody, enemy1);
     PhysicsBody.entity[enemy1] = enemy1;
 
     const enemy2 = addEntity(this.world);
+
     addComponent(this.world, Position, enemy2);
-    Position.x[enemy2] = 96;
-    Position.y[enemy2] = 96;
+    Position.x[enemy2] = 150;
+    Position.y[enemy2] = 150;
+
     addComponent(this.world, Velocity, player);
+
     addComponent(this.world, Sprite, enemy2);
     Sprite.texture[enemy2] = Textures.Red;
+
     addComponent(this.world, Computer, enemy2);
+
     addComponent(this.world, Input, enemy2);
     Input.speed[enemy2] = 25;
+
     addComponent(this.world, PhysicsBody, enemy2);
     PhysicsBody.entity[enemy2] = enemy2;
 
@@ -127,6 +146,7 @@ export class GameScene extends Phaser.Scene {
       createMovementSystem(this),
       createPlayerInputSystem(this.cursorKeys!),
       createSpriteSystem(this, this.sprites!, TextureKeys),
+      createCameraSystem(this, this.sprites!),
       createCollisionSystem(this, this.sprites!)
     );
   }

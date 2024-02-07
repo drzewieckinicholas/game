@@ -1,4 +1,8 @@
+import { addEntity, createWorld, IWorld } from 'bitecs';
+
 export class GameScene extends Phaser.Scene {
+  private world?: IWorld;
+
   constructor() {
     super('GameScene');
   }
@@ -12,6 +16,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    console.log('GameScene create');
+    this.world = createWorld();
+
+    // Player
+    const player = addEntity(this.world);
+
+    // Enemy
+    const enemy = addEntity(this.world);
   }
 }

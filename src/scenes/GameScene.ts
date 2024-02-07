@@ -1,7 +1,18 @@
 import { addComponent, addEntity, createWorld, IWorld, pipe } from 'bitecs';
 
-import { Position, Sprite } from '../components';
-import { createSpriteSystem } from '../systems';
+import {
+  Computer,
+  Input,
+  Player,
+  Position,
+  Sprite,
+  Velocity,
+} from '../components';
+import {
+  createMovementSystem,
+  createPlayerInputSystem,
+  createSpriteSystem,
+} from '../systems';
 
 enum Maps {
   Map = 0,
@@ -18,6 +29,7 @@ enum Textures {
 const TextureKeys: string[] = ['blue', 'green', 'red'];
 
 export class GameScene extends Phaser.Scene {
+  private cursorKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
   private pipeline?: (world: IWorld) => void;
   private sprites?: Map<
     number,
@@ -30,7 +42,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   init(): void {
-    console.log('GameScene init');
+    this.cursorKeys = this.input?.keyboard?.createCursorKeys();
   }
 
   preload(): void {
@@ -74,17 +86,29 @@ export class GameScene extends Phaser.Scene {
     addComponent(this.world, Position, player);
     Position.x[player] = 32;
     Position.y[player] = 32;
+    addComponent(this.world, Velocity, player);
     addComponent(this.world, Sprite, player);
     Sprite.texture[player] = Textures.Green;
+    addComponent(this.world, Player, player);
+    addComponent(this.world, Input, player);
+    Input.speed[player] = 25;
 
     const enemy = addEntity(this.world);
     addComponent(this.world, Position, enemy);
     Position.x[enemy] = 64;
     Position.y[enemy] = 64;
+    addComponent(this.world, Velocity, player);
     addComponent(this.world, Sprite, enemy);
     Sprite.texture[enemy] = Textures.Red;
+    addComponent(this.world, Computer, enemy);
+    addComponent(this.world, Input, enemy);
+    Input.speed[enemy] = 25;
 
-    this.pipeline = pipe(createSpriteSystem(this, this.sprites!, TextureKeys));
+    this.pipeline = pipe(
+      createMovementSystem(this),
+      createPlayerInputSystem(this.cursorKeys!),
+      createSpriteSystem(this, this.sprites!, TextureKeys)
+    );
   }
 
   update(): void {

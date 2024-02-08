@@ -14,6 +14,7 @@ import {
   createAnimationSystem,
   createCameraSystem,
   createCollisionSystem,
+  createComputerSystem,
   createMovementSystem,
   createPlayerInputSystem,
   createSpriteSystem,
@@ -125,56 +126,45 @@ export class GameScene extends Phaser.Scene {
     addComponent(this.world, Player, player);
 
     addComponent(this.world, Input, player);
-    Input.speed[player] = 25;
+    Input.speed[player] = 20;
 
     addComponent(this.world, PhysicsBody, player);
     PhysicsBody.entity[player] = player;
 
-    const enemy1 = addEntity(this.world);
+    for (let i = 0; i < 5; i++) {
+      const enemy = addEntity(this.world);
 
-    addComponent(this.world, Position, enemy1);
-    Position.x[enemy1] = 100;
-    Position.y[enemy1] = 100;
+      addComponent(this.world, Position, enemy);
+      Position.x[enemy] = Phaser.Math.Between(
+        this.scale.width * 0.25,
+        this.scale.width * 0.75
+      );
+      Position.y[enemy] = Phaser.Math.Between(
+        this.scale.height * 0.25,
+        this.scale.height * 0.75
+      );
 
-    addComponent(this.world, Velocity, player);
+      addComponent(this.world, Velocity, enemy);
 
-    addComponent(this.world, Sprite, enemy1);
-    Sprite.texture[enemy1] = Textures.Slime;
+      addComponent(this.world, Sprite, enemy);
+      Sprite.texture[enemy] = Textures.Slime;
 
-    addComponent(this.world, Animation, enemy1);
+      addComponent(this.world, Animation, enemy);
 
-    addComponent(this.world, Computer, enemy1);
+      addComponent(this.world, Computer, enemy);
+      Computer.timeBetweenActions[enemy] = 2000;
 
-    addComponent(this.world, Input, enemy1);
-    Input.speed[enemy1] = 25;
+      addComponent(this.world, Input, enemy);
+      Input.speed[enemy] = 10;
 
-    addComponent(this.world, PhysicsBody, enemy1);
-    PhysicsBody.entity[enemy1] = enemy1;
-
-    const enemy2 = addEntity(this.world);
-
-    addComponent(this.world, Position, enemy2);
-    Position.x[enemy2] = 150;
-    Position.y[enemy2] = 150;
-
-    addComponent(this.world, Velocity, player);
-
-    addComponent(this.world, Sprite, enemy2);
-    Sprite.texture[enemy2] = Textures.Slime;
-
-    addComponent(this.world, Animation, enemy2);
-
-    addComponent(this.world, Computer, enemy2);
-
-    addComponent(this.world, Input, enemy2);
-    Input.speed[enemy2] = 25;
-
-    addComponent(this.world, PhysicsBody, enemy2);
-    PhysicsBody.entity[enemy2] = enemy2;
+      addComponent(this.world, PhysicsBody, enemy);
+      PhysicsBody.entity[enemy] = enemy;
+    }
 
     this.pipeline = pipe(
       createMovementSystem(this),
       createPlayerInputSystem(this.cursorKeys!),
+      createComputerSystem(this),
       createSpriteSystem(this, this.sprites!, TextureKeys),
       createCameraSystem(this, this.sprites!),
       createCollisionSystem(this, this.sprites!),

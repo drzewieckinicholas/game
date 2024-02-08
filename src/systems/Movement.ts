@@ -12,12 +12,11 @@ export const createMovementSystem = (scene: Phaser.Scene) => {
     for (let i = 0; i < entities.length; ++i) {
       const id = entities[i];
       const direction = Input.direction[id];
+      const speed = Input.speed[id] * deltaTime;
 
       if (direction !== Direction.None) {
         Input.previousDirection[id] = direction;
       }
-
-      const speed = Input.speed[id] * deltaTime;
 
       switch (direction) {
         case Direction.Up:

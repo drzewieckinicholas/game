@@ -1,6 +1,6 @@
 import { defineQuery, defineSystem } from 'bitecs';
 
-import { createPlayerAnimations } from '../animations/player';
+import { createPlayerAnimations, createSlimeAnimations } from '../animations';
 import { Animation, Direction, Input } from '../components';
 
 export const createAnimationSystem = (
@@ -10,6 +10,7 @@ export const createAnimationSystem = (
   const query = defineQuery([Animation, Input]);
 
   createPlayerAnimations(scene.anims);
+  createSlimeAnimations(scene.anims);
 
   return defineSystem((world) => {
     const entities = query(world);
@@ -23,10 +24,11 @@ export const createAnimationSystem = (
 
       const direction = Input.direction[id];
       const previousDirection = Input.previousDirection[id];
+      const spriteKey = sprite.texture.key;
       const animation =
         direction === Direction.None
-          ? `idle-${Direction[previousDirection].toLowerCase()}`
-          : `walk-${Direction[direction].toLowerCase()}`;
+          ? `${spriteKey}-idle-${Direction[previousDirection].toLowerCase()}`
+          : `${spriteKey}-walk-${Direction[direction].toLowerCase()}`;
 
       if (animation) {
         sprite.anims.play(animation, true);

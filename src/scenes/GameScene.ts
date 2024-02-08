@@ -28,11 +28,11 @@ const MapKeys: string[] = ['map'];
 enum Textures {
   Decor = 0,
   Grass = 1,
-  Red = 2,
-  Player = 3,
+  Player = 2,
+  Slime = 3,
 }
 
-const TextureKeys: string[] = ['decor', 'grass', 'red', 'player'];
+const TextureKeys: string[] = ['decor', 'grass', 'player', 'slime'];
 
 export class GameScene extends Phaser.Scene {
   private cursorKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -60,16 +60,20 @@ export class GameScene extends Phaser.Scene {
       TextureKeys[Textures.Grass],
       `src/assets/tiles/${TextureKeys[Textures.Grass]}.png`
     );
-    this.load.image(
-      TextureKeys[Textures.Red],
-      `src/assets/${TextureKeys[Textures.Red]}.png`
-    );
     this.load.spritesheet(
       TextureKeys[Textures.Player],
       `src/assets/characters/${TextureKeys[Textures.Player]}.png`,
       {
         frameWidth: 48,
         frameHeight: 48,
+      }
+    );
+    this.load.spritesheet(
+      TextureKeys[Textures.Slime],
+      `src/assets/characters/${TextureKeys[Textures.Slime]}.png`,
+      {
+        frameWidth: 32,
+        frameHeight: 32,
       }
     );
     this.load.tilemapTiledJSON(
@@ -135,7 +139,9 @@ export class GameScene extends Phaser.Scene {
     addComponent(this.world, Velocity, player);
 
     addComponent(this.world, Sprite, enemy1);
-    Sprite.texture[enemy1] = Textures.Red;
+    Sprite.texture[enemy1] = Textures.Slime;
+
+    addComponent(this.world, Animation, enemy1);
 
     addComponent(this.world, Computer, enemy1);
 
@@ -154,7 +160,9 @@ export class GameScene extends Phaser.Scene {
     addComponent(this.world, Velocity, player);
 
     addComponent(this.world, Sprite, enemy2);
-    Sprite.texture[enemy2] = Textures.Red;
+    Sprite.texture[enemy2] = Textures.Slime;
+
+    addComponent(this.world, Animation, enemy2);
 
     addComponent(this.world, Computer, enemy2);
 

@@ -6,34 +6,27 @@ export const createCollisionSystem = (
   scene: Phaser.Scene,
   sprites: Map<number, Phaser.Types.Physics.Arcade.SpriteWithDynamicBody>
 ) => {
-  const queryPlayer = defineQuery([Player, PhysicsBody]);
-  const queryComputer = defineQuery([Computer, PhysicsBody]);
-  const queryComputerEnter = enterQuery(queryComputer);
-
-  let playerSprite:
-    | Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-    | undefined;
-  const computerSprites: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody[] =
-    [];
+  const queryPlayerEnter = enterQuery(defineQuery([Player, PhysicsBody]));
+  const queryComputerEnter = enterQuery(defineQuery([Computer, PhysicsBody]));
 
   return defineSystem((world) => {
-    const playerEntities = queryPlayer(world);
+    const playerEnterEntities = queryPlayerEnter(world);
     const computerEnterEntities = queryComputerEnter(world);
 
-    if (playerEntities.length > 0) {
-      playerSprite = sprites.get(playerEntities[0]);
-    }
+    if (playerEnterEntities.length > 0) {
+      const playerSprite = sprites.get(playerEnterEntities[0]);
 
-    computerEnterEntities.forEach((id) => {
-      const sprite = sprites.get(id);
+      playerSprite?.setCollideWorldBounds(true);
 
-      if (sprite) {
-        computerSprites.push(sprite);
-      }
-    });
+      computerEnterEntities.forEach((id) => {
+        const computerSprite = sprites.get(id);
 
-    if (playerSprite && computerSprites.length > 0) {
-      scene.physics.add.collider(playerSprite, computerSprites);
+        if (computerSprite && playerSprite) {
+          computerSprite.setCollideWorldBounds(true);
+
+          scene.physics.add.collider(playerSprite, computerSprite);
+        }
+      });
     }
 
     return world;

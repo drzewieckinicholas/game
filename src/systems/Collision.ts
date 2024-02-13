@@ -24,7 +24,7 @@ export const createCollisionSystem = (
         if (computerSprite && playerSprite) {
           computerSprite.setCollideWorldBounds(true);
 
-          scene.physics.add.collider(playerSprite, computerSprite);
+          scene.physics.add.collider(computerSprite, playerSprite);
         }
       });
     }

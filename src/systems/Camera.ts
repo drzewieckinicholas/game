@@ -11,6 +11,7 @@ export const createCameraSystem = (
   const queryEnter = enterQuery(query);
 
   scene.cameras.main.setZoom(2);
+  scene.cameras.main.setBounds(0, 0, 640, 480);
 
   return defineSystem((world) => {
     const enterEntities = queryEnter(world);

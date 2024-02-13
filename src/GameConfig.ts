@@ -12,6 +12,8 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
   pixelArt: true,
   scale: {
     autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 640,
+    height: 480,
     mode: Phaser.Scale.FIT,
     parent: 'game',
   },

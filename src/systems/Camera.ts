@@ -10,13 +10,14 @@ export const createCameraSystem = (
   const query = defineQuery([Player]);
   const queryEnter = enterQuery(query);
 
+  scene.cameras.main.setZoom(2);
+
   return defineSystem((world) => {
     const enterEntities = queryEnter(world);
     const player = enterEntities[0];
     const sprite = sprites.get(player);
 
     if (sprite) {
-      scene.cameras.main.setZoom(2);
       scene.cameras.main.startFollow(sprite);
     }
 

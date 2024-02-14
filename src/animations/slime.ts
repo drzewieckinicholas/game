@@ -1,27 +1,24 @@
+import { createAnimations } from '../utils';
+
 export const createSlimeAnimations = (
   anims: Phaser.Animations.AnimationManager
 ) => {
-  const slime = 'slime';
+  const spriteKey = 'slime';
   const frameRate = 6;
-  const infinite = -1;
+  const repeat = true;
 
   const animationConfig = [
-    { key: `${slime}-idle-down`, start: 0, end: 3 },
-    { key: `${slime}-idle-right`, start: 0, end: 3 },
-    { key: `${slime}-idle-up`, start: 0, end: 3 },
-    { key: `${slime}-idle-left`, start: 0, end: 3 },
-    { key: `${slime}-walk-down`, start: 0, end: 3 },
-    { key: `${slime}-walk-right`, start: 0, end: 3 },
-    { key: `${slime}-walk-up`, start: 0, end: 3 },
-    { key: `${slime}-walk-left`, start: 0, end: 3 },
+    { key: 'idle-down', start: 0, end: 3 },
+    { key: 'idle-right', start: 0, end: 3 },
+    { key: 'idle-up', start: 0, end: 3 },
+    { key: 'idle-left', start: 0, end: 3 },
+    { key: 'walk-down', start: 0, end: 3 },
+    { key: 'walk-right', start: 0, end: 3 },
+    { key: 'walk-up', start: 0, end: 3 },
+    { key: 'walk-left', start: 0, end: 3 },
   ];
 
   for (const { key, start, end } of animationConfig) {
-    anims.create({
-      key,
-      frames: anims.generateFrameNumbers(slime, { start, end }),
-      frameRate,
-      repeat: infinite,
-    });
+    createAnimations(anims, spriteKey, key, start, end, frameRate, repeat);
   }
 };

@@ -55,15 +55,15 @@ export class GameScene extends Phaser.Scene {
   preload(): void {
     this.load.image(
       TextureKeys[Textures.Decor],
-      `src/assets/tiles/${TextureKeys[Textures.Decor]}.png`
+      `/assets/tiles/${TextureKeys[Textures.Decor]}.png`
     );
     this.load.image(
       TextureKeys[Textures.Grass],
-      `src/assets/tiles/${TextureKeys[Textures.Grass]}.png`
+      `/assets/tiles/${TextureKeys[Textures.Grass]}.png`
     );
     this.load.spritesheet(
       TextureKeys[Textures.Player],
-      `src/assets/characters/${TextureKeys[Textures.Player]}.png`,
+      `/assets/characters/${TextureKeys[Textures.Player]}.png`,
       {
         frameWidth: 48,
         frameHeight: 48,
@@ -71,7 +71,7 @@ export class GameScene extends Phaser.Scene {
     );
     this.load.spritesheet(
       TextureKeys[Textures.Slime],
-      `src/assets/characters/${TextureKeys[Textures.Slime]}.png`,
+      `/assets/characters/${TextureKeys[Textures.Slime]}.png`,
       {
         frameWidth: 32,
         frameHeight: 32,
@@ -79,7 +79,7 @@ export class GameScene extends Phaser.Scene {
     );
     this.load.tilemapTiledJSON(
       MapKeys[Maps.Map],
-      `src/assets/${MapKeys[Maps.Map]}.json`
+      `/assets/${MapKeys[Maps.Map]}.json`
     );
   }
 

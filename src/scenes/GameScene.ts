@@ -27,13 +27,12 @@ enum Maps {
 const MapKeys: string[] = ['map'];
 
 enum Textures {
-  Decor = 0,
-  Grass = 1,
-  Player = 2,
-  Slime = 3,
+  Tiles = 0,
+  Player = 1,
+  Slime = 2,
 }
 
-const TextureKeys: string[] = ['decor', 'grass', 'player', 'slime'];
+const TextureKeys: string[] = ['tiles', 'player', 'slime'];
 
 export class GameScene extends Phaser.Scene {
   private cursorKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -54,12 +53,8 @@ export class GameScene extends Phaser.Scene {
 
   preload(): void {
     this.load.image(
-      TextureKeys[Textures.Decor],
-      `/assets/tiles/${TextureKeys[Textures.Decor]}.png`
-    );
-    this.load.image(
-      TextureKeys[Textures.Grass],
-      `/assets/tiles/${TextureKeys[Textures.Grass]}.png`
+      TextureKeys[Textures.Tiles],
+      `/assets/tiles/${TextureKeys[Textures.Tiles]}.png`
     );
     this.load.spritesheet(
       TextureKeys[Textures.Player],
@@ -91,22 +86,17 @@ export class GameScene extends Phaser.Scene {
     });
 
     map.addTilesetImage(
-      TextureKeys[Textures.Decor],
-      TextureKeys[Textures.Decor],
+      TextureKeys[Textures.Tiles],
+      TextureKeys[Textures.Tiles],
       16,
       16
     );
 
-    map.addTilesetImage(
-      TextureKeys[Textures.Grass],
-      TextureKeys[Textures.Grass],
-      16,
-      16
-    );
+    map.createLayer(0, TextureKeys[Textures.Tiles], 0, 0);
 
-    map.createLayer(0, TextureKeys[Textures.Grass], 0, 0);
+    map.createLayer(1, TextureKeys[Textures.Tiles], 0, 0);
 
-    map.createLayer(1, TextureKeys[Textures.Decor], 0, 0);
+    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     this.world = createWorld();
 
@@ -136,12 +126,12 @@ export class GameScene extends Phaser.Scene {
 
       addComponent(this.world, Position, enemy);
       Position.x[enemy] = Phaser.Math.Between(
-        this.scale.width * 0.25,
-        this.scale.width * 0.75
+        map.widthInPixels * 0.25,
+        map.widthInPixels * 0.75
       );
       Position.y[enemy] = Phaser.Math.Between(
-        this.scale.height * 0.25,
-        this.scale.height * 0.75
+        map.heightInPixels * 0.25,
+        map.heightInPixels * 0.75
       );
 
       addComponent(this.world, Velocity, enemy);
@@ -166,7 +156,7 @@ export class GameScene extends Phaser.Scene {
       createPlayerInputSystem(this.cursorKeys!),
       createComputerSystem(this),
       createSpriteSystem(this, this.sprites!, TextureKeys),
-      createCameraSystem(this, this.sprites!),
+      createCameraSystem(this, this.sprites!, map),
       createCollisionSystem(this, this.sprites!),
       createAnimationSystem(this, this.sprites!)
     );

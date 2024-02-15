@@ -10,6 +10,7 @@ import {
   Sprite,
   Velocity,
 } from '../components';
+import { MapKeys, Maps, TextureKeys, Textures } from '../constants';
 import {
   createAnimationSystem,
   createCameraSystem,
@@ -20,21 +21,7 @@ import {
   createSpriteSystem,
 } from '../systems';
 
-enum Maps {
-  Map = 0,
-}
-
-const MapKeys: string[] = ['map'];
-
-enum Textures {
-  Tiles = 0,
-  Player = 1,
-  Slime = 2,
-}
-
-const TextureKeys: string[] = ['tiles', 'player', 'slime'];
-
-export class GameScene extends Phaser.Scene {
+export class Game extends Phaser.Scene {
   private cursorKeys?: Phaser.Types.Input.Keyboard.CursorKeys;
   private pipeline?: (world: IWorld) => void;
   private sprites?: Map<
@@ -44,57 +31,17 @@ export class GameScene extends Phaser.Scene {
   private world?: IWorld;
 
   constructor() {
-    super('GameScene');
+    super('Game');
   }
 
   init(): void {
     this.cursorKeys = this.input?.keyboard?.createCursorKeys();
-  }
 
-  preload(): void {
-    this.load.image(
-      TextureKeys[Textures.Tiles],
-      `/assets/tiles/${TextureKeys[Textures.Tiles]}.png`
-    );
-    this.load.spritesheet(
-      TextureKeys[Textures.Player],
-      `/assets/characters/${TextureKeys[Textures.Player]}.png`,
-      {
-        frameWidth: 48,
-        frameHeight: 48,
-      }
-    );
-    this.load.spritesheet(
-      TextureKeys[Textures.Slime],
-      `/assets/characters/${TextureKeys[Textures.Slime]}.png`,
-      {
-        frameWidth: 32,
-        frameHeight: 32,
-      }
-    );
-    this.load.tilemapTiledJSON(
-      MapKeys[Maps.Map],
-      `/assets/${MapKeys[Maps.Map]}.json`
-    );
+    this.sprites = new Map();
   }
 
   create(): void {
-    this.sprites = new Map();
-
-    const map: Phaser.Tilemaps.Tilemap = this.make.tilemap({
-      key: MapKeys[Maps.Map],
-    });
-
-    map.addTilesetImage(
-      TextureKeys[Textures.Tiles],
-      TextureKeys[Textures.Tiles],
-      16,
-      16
-    );
-
-    map.createLayer(0, TextureKeys[Textures.Tiles], 0, 0);
-
-    map.createLayer(1, TextureKeys[Textures.Tiles], 0, 0);
+    const map = this.createMap();
 
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
@@ -166,5 +113,24 @@ export class GameScene extends Phaser.Scene {
     if (!this.pipeline || !this.world) return;
 
     this.pipeline(this.world);
+  }
+
+  private createMap(): Phaser.Tilemaps.Tilemap {
+    const map: Phaser.Tilemaps.Tilemap = this.make.tilemap({
+      key: MapKeys[Maps.Map],
+    });
+
+    map.addTilesetImage(
+      TextureKeys[Textures.Tiles],
+      TextureKeys[Textures.Tiles],
+      16,
+      16
+    );
+
+    for (let i = 0; i < map.layers.length; i++) {
+      map.createLayer(i, TextureKeys[Textures.Tiles], 0, 0);
+    }
+
+    return map;
   }
 }

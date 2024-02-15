@@ -1,4 +1,4 @@
-import { GameScene } from './scenes';
+import { Game, Preloader } from './scenes';
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -17,5 +17,5 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     parent: 'game',
   },
-  scene: [GameScene],
+  scene: [Preloader, Game],
 };

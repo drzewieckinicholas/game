@@ -4,11 +4,32 @@
       "image": "tiles",
       "format": "RGBA8888",
       "size": {
-        "w": 96,
-        "h": 784
+        "w": 256,
+        "h": 656
       },
       "scale": 1,
       "frames": [
+        {
+          "filename": "objects.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 256,
+            "h": 208
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 256,
+            "h": 208
+          },
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 256,
+            "h": 208
+          }
+        },
         {
           "filename": "plains.png",
           "rotated": false,
@@ -25,177 +46,51 @@
           },
           "frame": {
             "x": 0,
-            "y": 0,
+            "y": 208,
             "w": 96,
             "h": 192
           }
         },
         {
-          "filename": "water-3.png",
+          "filename": "carpet.png",
           "rotated": false,
           "trimmed": false,
           "sourceSize": {
             "w": 96,
-            "h": 64
+            "h": 128
           },
           "spriteSourceSize": {
             "x": 0,
             "y": 0,
             "w": 96,
-            "h": 64
+            "h": 128
           },
           "frame": {
             "x": 0,
-            "y": 192,
+            "y": 400,
             "w": 96,
-            "h": 64
+            "h": 128
           }
         },
         {
-          "filename": "water-decor.png",
+          "filename": "walls.png",
           "rotated": false,
           "trimmed": false,
           "sourceSize": {
-            "w": 96,
-            "h": 32
+            "w": 128,
+            "h": 128
           },
           "spriteSourceSize": {
             "x": 0,
             "y": 0,
-            "w": 96,
-            "h": 32
+            "w": 128,
+            "h": 128
           },
           "frame": {
             "x": 0,
-            "y": 256,
-            "w": 96,
-            "h": 32
-          }
-        },
-        {
-          "filename": "water-lillies.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 96,
-            "h": 16
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 96,
-            "h": 16
-          },
-          "frame": {
-            "x": 0,
-            "y": 288,
-            "w": 96,
-            "h": 16
-          }
-        },
-        {
-          "filename": "water-1.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 96,
-            "h": 64
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 96,
-            "h": 64
-          },
-          "frame": {
-            "x": 0,
-            "y": 304,
-            "w": 96,
-            "h": 64
-          }
-        },
-        {
-          "filename": "water-2.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 96,
-            "h": 64
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 96,
-            "h": 64
-          },
-          "frame": {
-            "x": 0,
-            "y": 368,
-            "w": 96,
-            "h": 64
-          }
-        },
-        {
-          "filename": "water-6.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 96,
-            "h": 64
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 96,
-            "h": 64
-          },
-          "frame": {
-            "x": 0,
-            "y": 432,
-            "w": 96,
-            "h": 64
-          }
-        },
-        {
-          "filename": "water-4.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 96,
-            "h": 64
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 96,
-            "h": 64
-          },
-          "frame": {
-            "x": 0,
-            "y": 496,
-            "w": 96,
-            "h": 64
-          }
-        },
-        {
-          "filename": "water-5.png",
-          "rotated": false,
-          "trimmed": false,
-          "sourceSize": {
-            "w": 96,
-            "h": 64
-          },
-          "spriteSourceSize": {
-            "x": 0,
-            "y": 0,
-            "w": 96,
-            "h": 64
-          },
-          "frame": {
-            "x": 0,
-            "y": 560,
-            "w": 96,
-            "h": 64
+            "y": 528,
+            "w": 128,
+            "h": 128
           }
         },
         {
@@ -213,10 +108,52 @@
             "h": 80
           },
           "frame": {
-            "x": 0,
-            "y": 624,
+            "x": 96,
+            "y": 208,
             "w": 64,
             "h": 80
+          }
+        },
+        {
+          "filename": "flooring.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 80,
+            "h": 48
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 80,
+            "h": 48
+          },
+          "frame": {
+            "x": 96,
+            "y": 288,
+            "w": 80,
+            "h": 48
+          }
+        },
+        {
+          "filename": "chest_02.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 64,
+            "h": 16
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 16
+          },
+          "frame": {
+            "x": 160,
+            "y": 208,
+            "w": 64,
+            "h": 16
           }
         },
         {
@@ -234,10 +171,94 @@
             "h": 64
           },
           "frame": {
-            "x": 0,
-            "y": 704,
+            "x": 160,
+            "y": 224,
             "w": 64,
             "h": 64
+          }
+        },
+        {
+          "filename": "chest_01.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 64,
+            "h": 16
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 64,
+            "h": 16
+          },
+          "frame": {
+            "x": 96,
+            "y": 336,
+            "w": 64,
+            "h": 16
+          }
+        },
+        {
+          "filename": "wooden_door_b.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 32,
+            "h": 16
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 32,
+            "h": 16
+          },
+          "frame": {
+            "x": 96,
+            "y": 352,
+            "w": 32,
+            "h": 16
+          }
+        },
+        {
+          "filename": "wooden_door.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 32,
+            "h": 16
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 32,
+            "h": 16
+          },
+          "frame": {
+            "x": 96,
+            "y": 368,
+            "w": 32,
+            "h": 16
+          }
+        },
+        {
+          "filename": "wooden.png",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 16,
+            "h": 16
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 16,
+            "h": 16
+          },
+          "frame": {
+            "x": 96,
+            "y": 384,
+            "w": 16,
+            "h": 16
           }
         },
         {
@@ -255,8 +276,8 @@
             "h": 16
           },
           "frame": {
-            "x": 0,
-            "y": 768,
+            "x": 96,
+            "y": 400,
             "w": 16,
             "h": 16
           }

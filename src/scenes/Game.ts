@@ -49,8 +49,8 @@ export class Game extends Phaser.Scene {
     const player = addEntity(this.world);
 
     addComponent(this.world, Position, player);
-    Position.x[player] = 50;
-    Position.y[player] = 50;
+    Position.x[player] = 100;
+    Position.y[player] = 100;
 
     addComponent(this.world, Velocity, player);
 

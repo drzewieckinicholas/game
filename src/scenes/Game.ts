@@ -3,6 +3,7 @@ import { addComponent, addEntity, createWorld, IWorld, pipe } from 'bitecs';
 import {
   Animation,
   Computer,
+  Direction,
   Input,
   Player,
   Position,
@@ -62,6 +63,7 @@ export class Game extends Phaser.Scene {
     addComponent(this.world, Player, player);
 
     addComponent(this.world, Input, player);
+    Input.direction[player] = Direction.Down;
     Input.speed[player] = 20;
 
     for (let i = 0; i < 5; i++) {
@@ -88,6 +90,7 @@ export class Game extends Phaser.Scene {
       Computer.timeBetweenActions[enemy] = 2000;
 
       addComponent(this.world, Input, enemy);
+      Input.direction[enemy] = Phaser.Math.Between(0, 4);
       Input.speed[enemy] = 10;
     }
 

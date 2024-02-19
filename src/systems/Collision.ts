@@ -1,32 +1,32 @@
-import { defineQuery, defineSystem, enterQuery } from 'bitecs';
+import { defineQuery, defineSystem, enterQuery, removeEntity } from 'bitecs';
 
-import { Computer, PhysicsBody, Player } from '../components';
+import { Computer } from '../components';
 
 export const createCollisionSystem = (
   scene: Phaser.Scene,
-  sprites: Map<number, Phaser.Types.Physics.Arcade.SpriteWithDynamicBody>
+  sprites: Map<number, Phaser.Types.Physics.Arcade.SpriteWithDynamicBody>,
+  player: number
 ) => {
-  const queryPlayerEnter = enterQuery(defineQuery([Player, PhysicsBody]));
-  const queryComputerEnter = enterQuery(defineQuery([Computer, PhysicsBody]));
+  const query = defineQuery([Computer]);
+  const queryEnter = enterQuery(query);
 
   return defineSystem((world) => {
-    const playerEnterEntities = queryPlayerEnter(world);
-    const computerEnterEntities = queryComputerEnter(world);
+    const playerSprite = sprites.get(player);
 
-    if (playerEnterEntities.length > 0) {
-      const playerSprite = sprites.get(playerEnterEntities[0]);
+    if (!playerSprite) {
+      return world;
+    }
 
-      playerSprite?.setCollideWorldBounds(true);
+    const enterEntities = queryEnter(world);
 
-      computerEnterEntities.forEach((id) => {
-        const computerSprite = sprites.get(id);
+    for (const id of enterEntities) {
+      const computerSprite = sprites.get(id);
 
-        if (computerSprite && playerSprite) {
-          computerSprite.setCollideWorldBounds(true);
-
-          scene.physics.add.collider(computerSprite, playerSprite);
-        }
-      });
+      if (computerSprite) {
+        scene.physics.add.collider(computerSprite, playerSprite, () => {
+          removeEntity(world, id);
+        });
+      }
     }
 
     return world;

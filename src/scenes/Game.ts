@@ -4,7 +4,6 @@ import {
   Animation,
   Computer,
   Input,
-  PhysicsBody,
   Player,
   Position,
   Sprite,
@@ -16,8 +15,8 @@ import {
   createCameraSystem,
   createCollisionSystem,
   createComputerSystem,
+  createInputSystem,
   createMovementSystem,
-  createPlayerInputSystem,
   createSpriteSystem,
 } from '../systems';
 
@@ -65,9 +64,6 @@ export class Game extends Phaser.Scene {
     addComponent(this.world, Input, player);
     Input.speed[player] = 20;
 
-    addComponent(this.world, PhysicsBody, player);
-    PhysicsBody.entity[player] = player;
-
     for (let i = 0; i < 5; i++) {
       const enemy = addEntity(this.world);
 
@@ -93,18 +89,15 @@ export class Game extends Phaser.Scene {
 
       addComponent(this.world, Input, enemy);
       Input.speed[enemy] = 10;
-
-      addComponent(this.world, PhysicsBody, enemy);
-      PhysicsBody.entity[enemy] = enemy;
     }
 
     this.pipeline = pipe(
       createMovementSystem(this),
-      createPlayerInputSystem(this.cursorKeys!),
+      createInputSystem(this.cursorKeys!),
       createComputerSystem(this),
       createSpriteSystem(this, this.sprites!, TextureKeys),
       createCameraSystem(this, this.sprites!, map),
-      createCollisionSystem(this, this.sprites!),
+      createCollisionSystem(this, this.sprites!, player),
       createAnimationSystem(this, this.sprites!)
     );
   }

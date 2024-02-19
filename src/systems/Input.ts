@@ -1,12 +1,12 @@
 import { defineQuery, defineSystem } from 'bitecs';
 import Phaser from 'phaser';
 
-import { Direction, Input, Player, Velocity } from '../components';
+import { Direction, Input, Player } from '../components';
 
-export const createPlayerInputSystem = (
+export const createInputSystem = (
   cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys
 ) => {
-  const query = defineQuery([Input, Player, Velocity]);
+  const query = defineQuery([Input, Player]);
 
   return defineSystem((world) => {
     const entities = query(world);

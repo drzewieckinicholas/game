@@ -25,6 +25,8 @@ export const createSpriteSystem = (
         texture
       );
 
+      sprite.setCollideWorldBounds(true);
+
       sprites.set(id, sprite);
     }
 
@@ -43,7 +45,14 @@ export const createSpriteSystem = (
     const exitEntities = queryExit(world);
 
     for (let i = 0; i < exitEntities.length; ++i) {
-      const id = enterEntities[i];
+      const id = exitEntities[i];
+      const sprite = sprites.get(id);
+
+      if (!sprite) continue;
+
+      sprite.body.destroy();
+
+      sprite.destroy();
 
       sprites.delete(id);
     }
